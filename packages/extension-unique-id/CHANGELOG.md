@@ -1,5 +1,113 @@
 # @tiptap/extension-unique-id
 
+## 3.10.1
+
+### Patch Changes
+
+- Updated dependencies [3564e7c]
+  - @tiptap/core@3.10.1
+  - @tiptap/pm@3.10.1
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4aa9f57]
+- Updated dependencies [4aa9f57]
+  - @tiptap/core@3.10.0
+  - @tiptap/pm@3.10.0
+
+## 3.9.1
+
+### Patch Changes
+
+- @tiptap/core@3.9.1
+- @tiptap/pm@3.9.1
+
+## 3.9.0
+
+### Minor Changes
+
+- 1df8901: Add `updateDocument` option to disable document updates caused by the Unique ID extension.
+
+### Patch Changes
+
+- Updated dependencies [bbb8e16]
+  - @tiptap/core@3.9.0
+  - @tiptap/pm@3.9.0
+
+## 3.8.0
+
+### Minor Changes
+
+- 23e516e: Add `updateDocument` option to disable document updates caused by the Unique ID extension.
+
+### Patch Changes
+
+- @tiptap/core@3.8.0
+- @tiptap/pm@3.8.0
+
+## 3.7.2
+
+### Patch Changes
+
+- @tiptap/core@3.7.2
+- @tiptap/pm@3.7.2
+
+## 3.7.1
+
+### Patch Changes
+
+- @tiptap/core@3.7.1
+- @tiptap/pm@3.7.1
+
+## 3.7.0
+
+### Patch Changes
+
+- Updated dependencies [35645d9]
+- Updated dependencies [35645d9]
+- Updated dependencies [35645d9]
+  - @tiptap/core@3.7.0
+  - @tiptap/pm@3.7.0
+
+## 3.6.7
+
+### Patch Changes
+
+- @tiptap/core@3.6.7
+- @tiptap/pm@3.6.7
+
+## 3.6.6
+
+### Patch Changes
+
+- @tiptap/core@3.6.6
+- @tiptap/pm@3.6.6
+
+## 3.6.5
+
+### Patch Changes
+
+- Updated dependencies [1e4caea]
+  - @tiptap/core@3.6.5
+  - @tiptap/pm@3.6.5
+
+## 3.6.4
+
+### Patch Changes
+
+- @tiptap/core@3.6.4
+- @tiptap/pm@3.6.4
+
+## 3.6.3
+
+### Patch Changes
+
+- Updated dependencies [67f7b4a]
+  - @tiptap/core@3.6.3
+  - @tiptap/pm@3.6.3
+
 ## 3.6.2
 
 ### Patch Changes

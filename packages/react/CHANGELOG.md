@@ -1,5 +1,111 @@
 # Change Log
 
+## 3.10.1
+
+### Patch Changes
+
+- Updated dependencies [3564e7c]
+  - @tiptap/core@3.10.1
+  - @tiptap/pm@3.10.1
+
+## 3.10.0
+
+### Patch Changes
+
+- Updated dependencies [4aa9f57]
+- Updated dependencies [4aa9f57]
+  - @tiptap/core@3.10.0
+  - @tiptap/pm@3.10.0
+
+## 3.9.1
+
+### Patch Changes
+
+- @tiptap/core@3.9.1
+- @tiptap/pm@3.9.1
+
+## 3.9.0
+
+### Patch Changes
+
+- f0b3552: Prevent Bubble Menu plugin from re-loading every time the BubbleMenu component re-renders. Reverts a regression introduced in v3.6.3, in PR #7028.
+- Updated dependencies [bbb8e16]
+  - @tiptap/core@3.9.0
+  - @tiptap/pm@3.9.0
+
+## 3.8.0
+
+### Patch Changes
+
+- f3770af: Prevent Bubble Menu plugin from re-loading every time the BubbleMenu component re-renders. Reverts a regression introduced in v3.6.3, in PR #7028.
+  - @tiptap/core@3.8.0
+  - @tiptap/pm@3.8.0
+
+## 3.7.2
+
+### Patch Changes
+
+- @tiptap/core@3.7.2
+- @tiptap/pm@3.7.2
+
+## 3.7.1
+
+### Patch Changes
+
+- @tiptap/core@3.7.1
+- @tiptap/pm@3.7.1
+
+## 3.7.0
+
+### Patch Changes
+
+- Updated dependencies [35645d9]
+- Updated dependencies [35645d9]
+- Updated dependencies [35645d9]
+  - @tiptap/core@3.7.0
+  - @tiptap/pm@3.7.0
+
+## 3.6.7
+
+### Patch Changes
+
+- @tiptap/core@3.6.7
+- @tiptap/pm@3.6.7
+
+## 3.6.6
+
+### Patch Changes
+
+- @tiptap/core@3.6.6
+- @tiptap/pm@3.6.6
+
+## 3.6.5
+
+### Patch Changes
+
+- Updated dependencies [1e4caea]
+  - @tiptap/core@3.6.5
+  - @tiptap/pm@3.6.5
+
+## 3.6.4
+
+### Patch Changes
+
+- @tiptap/core@3.6.4
+- @tiptap/pm@3.6.4
+
+## 3.6.3
+
+### Patch Changes
+
+- 48846f2: Updated the React `FloatingMenu` plugin hook dependencies to match the `BubbleMenu` behavior.
+  The FloatingMenu will now respond to changes in `appendTo`, `pluginKey`, `shouldShow`, and `options`.
+- e0be819: Resolved an issue where the React BubbleMenu did not update when FloatingUI option props changed after initial mount. The BubbleMenu now correctly responds to updated option props.
+- caec80e: Improved the BubbleMenu's usability by ensuring the `appendTo` prop passed to the React BubbleMenu component is now correctly forwarded to the underlying bubble menu plugin. This fix allows developers to customize where the BubbleMenu is attached in the DOM, helping resolve issues with positioning and portal setups in React apps.
+- Updated dependencies [67f7b4a]
+  - @tiptap/core@3.6.3
+  - @tiptap/pm@3.6.3
+
 ## 3.6.2
 
 ### Patch Changes

@@ -57,6 +57,8 @@ export class Editor extends EventEmitter<EditorEvents> {
 
   private css: HTMLStyleElement | null = null
 
+  private className = 'tiptap'
+
   public schema!: Schema
 
   private editorView: EditorView | null = null
@@ -193,7 +195,8 @@ export class Editor extends EventEmitter<EditorEvents> {
     this.isInitialized = false
 
     // Safely remove CSS element with fallback for test environments
-    if (this.css) {
+    // Only remove CSS if no other editors exist in the document after unmount
+    if (this.css && !document.querySelectorAll(`.${this.className}`).length) {
       try {
         if (typeof this.css.remove === 'function') {
           this.css.remove()
@@ -315,6 +318,11 @@ export class Editor extends EventEmitter<EditorEvents> {
       } as EditorView,
       {
         get: (obj, key) => {
+          if (this.editorView) {
+            // If the editor view is available, but the caller has a stale reference to the proxy,
+            // Just return what the editor view has.
+            return this.editorView[key as keyof EditorView]
+          }
           // Specifically always return the most recent editorState
           if (key === 'state') {
             return this.editorState
@@ -551,7 +559,7 @@ export class Editor extends EventEmitter<EditorEvents> {
    * Prepend class name to element.
    */
   public prependClass(): void {
-    this.view.dom.className = `tiptap ${this.view.dom.className}`
+    this.view.dom.className = `${this.className} ${this.view.dom.className}`
   }
 
   public isCapturingTransaction = false

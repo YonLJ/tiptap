@@ -90,7 +90,7 @@ export interface BubbleMenuPluginProps {
    * @type {HTMLElement}
    * @default null
    */
-  appendTo?: HTMLElement
+  appendTo?: HTMLElement | (() => HTMLElement)
 
   /**
    * A function that returns the virtual element for the menu.
@@ -161,7 +161,7 @@ export class BubbleMenuView implements PluginView {
 
   public resizeDelay: number
 
-  public appendTo: HTMLElement | undefined
+  public appendTo: HTMLElement | (() => HTMLElement) | undefined
 
   public getReferencedVirtualElement: (() => VirtualElement | null) | undefined
 
@@ -366,6 +366,7 @@ export class BubbleMenuView implements PluginView {
 
     if (this.getShouldShow()) {
       this.show()
+      this.updatePosition()
     }
   }
 
@@ -494,7 +495,7 @@ export class BubbleMenuView implements PluginView {
       to,
     })
 
-    return shouldShow
+    return shouldShow || false
   }
 
   updateHandler = (view: EditorView, selectionChanged: boolean, docChanged: boolean, oldState?: EditorState) => {
@@ -525,8 +526,10 @@ export class BubbleMenuView implements PluginView {
 
     this.element.style.visibility = 'visible'
     this.element.style.opacity = '1'
+
     // attach to appendTo or editor's parent element
-    ;(this.appendTo ?? this.view.dom.parentElement)?.appendChild(this.element)
+    const appendToElement = typeof this.appendTo === 'function' ? this.appendTo() : this.appendTo
+    ;(appendToElement ?? this.view.dom.parentElement)?.appendChild(this.element)
 
     if (this.floatingUIOptions.onShow) {
       this.floatingUIOptions.onShow()

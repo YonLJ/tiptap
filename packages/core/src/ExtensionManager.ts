@@ -29,12 +29,21 @@ export class ExtensionManager {
 
   schema: Schema
 
+  /**
+   * A flattened and sorted array of all extensions
+   */
   extensions: Extensions
+
+  /**
+   * A non-flattened array of base extensions (no sub-extensions)
+   */
+  baseExtensions: Extensions
 
   splittableMarks: string[] = []
 
   constructor(extensions: Extensions, editor: Editor) {
     this.editor = editor
+    this.baseExtensions = extensions
     this.extensions = resolveExtensions(extensions)
     this.schema = getSchemaByResolvedExtensions(this.extensions, editor)
     this.setupExtensions()
@@ -206,10 +215,16 @@ export class ExtensionManager {
             return []
           }
 
+          const nodeViewResult = addNodeView()
+
+          if (!nodeViewResult) {
+            return []
+          }
+
           const nodeview: NodeViewConstructor = (node, view, getPos, decorations, innerDecorations) => {
             const HTMLAttributes = getRenderedAttributes(node, extensionAttributes)
 
-            return addNodeView()({
+            return nodeViewResult({
               // pass-through
               node,
               view,

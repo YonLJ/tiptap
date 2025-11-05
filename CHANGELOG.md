@@ -1,5 +1,345 @@
 # Releases
 
+## v3.10.1
+
+### @tiptap/core
+
+#### Patch Changes
+
+- Use correct `ResizableNodeView` class name
+
+## v3.10.0
+
+### @tiptap/core
+
+#### Minor Changes
+
+- Add a new ResizableNodeview NodeView to core that wraps elements (images, videos, iframes) with configurable resize handles. It provides live onResize/onCommit callbacks, min/max constraints, aspect-ratio support, and styling hooks (class names + data attributes) to improve UX when resizing media inside the editor.
+- the addNodeView function can now return `null` to dynamically disable rendering of a node view
+  
+  While this should not directly cause any issues, it's noteworthy as it still could affect some behavior in some edge cases.
+
+### @tiptap/extension-image
+
+#### Minor Changes
+
+- Added a new `resize` option that allows images to be resized. The option adds resize handlers to images allowing users to manually resize images via drag and drop or touch
+
+## v3.9.1
+
+### @tiptap/extension-table
+
+#### Patch Changes
+
+- Add a `renderWrapper` option to the Table extension so consumers can customize whether the table wrapper for the resizable node view should be rendered in non-editable mode as well.
+
+## v3.9.0
+
+### @tiptap/vue-3
+
+#### Patch Changes
+
+- Fix attribute forwarding for BubbleMenu and FloatingMenu Vue 3 components to allow setting z-index and other HTML attributes
+
+### @tiptap/extension-hard-break
+
+#### Patch Changes
+
+- Ensure that markdown hard breaks (two spaces followed by a newline) are parsed so they render as line breaks (`<br>`) in the editor when using `contentType: 'markdown'`.
+  
+  Fixes #7107
+
+### @tiptap/extension-unique-id
+
+#### Minor Changes
+
+- Add `updateDocument` option to disable document updates caused by the Unique ID extension.
+
+### @tiptap/core
+
+#### Patch Changes
+
+- Only remove injected CSS on unmount if no other editors are in the document (fixes #6836)
+
+### @tiptap/extension-drag-handle
+
+#### Patch Changes
+
+- Replace DOM traversal with browser's native elementsFromPoint for better performance.
+  
+  - Use elementsFromPoint instead of querySelectorAll
+  - Add clampToContent helper for coordinate boundary validation
+  - Add findClosestTopLevelBlock helper for efficient block lookup
+  - Future-proof for root-level mousemove listeners
+
+### @tiptap/react
+
+#### Patch Changes
+
+- Prevent Bubble Menu plugin from re-loading every time the BubbleMenu component re-renders. Reverts a regression introduced in v3.6.3, in PR #7028.
+
+## v3.8.0
+
+### @tiptap/extension-unique-id
+
+#### Minor Changes
+
+- Add `updateDocument` option to disable document updates caused by the Unique ID extension.
+
+### @tiptap/react
+
+#### Patch Changes
+
+- Prevent Bubble Menu plugin from re-loading every time the BubbleMenu component re-renders. Reverts a regression introduced in v3.6.3, in PR #7028.
+
+## v3.7.2
+
+### @tiptap/html
+
+#### Patch Changes
+
+- Fix [CVE-2025-62410](https://www.cve.org/CVERecord?id=CVE-2025-62410) by updating happy-dom to ^20.0.2
+
+## v3.7.1
+
+### @tiptap/markdown
+
+#### Patch Changes
+
+- Editors will not throw an error anymore when `content` is an empty string and `contentType` is `markdown`
+- Remove invalid server configuration from package.json
+
+## v3.7.0
+
+### @tiptap/core
+
+#### Minor Changes
+
+- All commands and their corresponding TypeScript types are now exported from `@tiptap/core` so they can be imported and referenced directly by consumers. This makes it easier to build typed helpers, extensions, and tests that depend on the command signatures.
+  
+  Why:
+  - Previously some command option types were only available as internal types or scattered across files, which made it awkward for downstream users to import and reuse them.
+  
+  ```ts
+  import { commands } from '@tiptap/core'
+  ```
+  
+  Notes:
+  - This is a non-breaking, additive change. It improves ergonomics for TypeScript consumers.
+  - If you rely on previously private/internal types, prefer the exported types from `@tiptap/core` going forward.
+- Add comprehensive bidirectional markdown support to Tiptap through a new `@tiptap/markdown` package and Markdown utilities in `@tiptap/core`.
+  
+  **New Package: `@tiptap/markdown`** - A new official extension that provides full Markdown parsing and serialization capabilities using [MarkedJS](https://marked.js.org) as the underlying Markdown parser.
+  
+  **Core Features:**
+  
+  **Extension API**
+  - **`Markdown` Extension**: Main extension that adds Markdown support to your editor
+  - **`MarkdownManager`**: Core engine for parsing and serializing Markdown
+    - Parse Markdown strings to Tiptap JSON: `editor.markdown.parse(markdown)`
+    - Serialize Tiptap JSON to Markdown: `editor.markdown.serialize(json)`
+    - Access to underlying marked.js instance: `editor.markdown.instance`
+  
+  #### Editor Methods
+  - **`editor.getMarkdown()`**: Serialize current editor content to Markdown string
+  - **`editor.markdown`**: Access to MarkdownManager instance for advanced operations
+  
+  **Editor Options:**
+  - **`contentType`**: Control the type of content that is inserted into the editor. Can be `json`, `html` or `markdown` - defaults to `json` and will automatically detect invalid content types (like JSON when it is actually Markdown).
+    ```typescript
+    new Editor({
+      content: '# Hello World',
+      contentType: 'markdown'
+    })
+    ```
+  
+  **Command Options:** All content commands now support an `contentType` option:
+  - **`setContent(markdown, { contentType: 'markdown' })`**: Replace editor content with markdown
+  - **`insertContent(markdown, { contentType: 'markdown' })`**: Insert markdown at cursor position
+  - **`insertContentAt(position, markdown, { contentType: 'markdown' })`**: Insert Markdown at specific position
+  
+  For more, check [the documentation](https://tiptap.dev/docs/editor/markdown).
+
+#### Patch Changes
+
+- The extension manager now provides a new property `baseExtensions` that contains an unflattened array of extensions
+
+### @tiptap/markdown
+
+#### Minor Changes
+
+- Add comprehensive bidirectional markdown support to Tiptap through a new `@tiptap/markdown` package and Markdown utilities in `@tiptap/core`.
+  
+  **New Package: `@tiptap/markdown`** - A new official extension that provides full Markdown parsing and serialization capabilities using [MarkedJS](https://marked.js.org) as the underlying Markdown parser.
+  
+  **Core Features:**
+  
+  **Extension API**
+  - **`Markdown` Extension**: Main extension that adds Markdown support to your editor
+  - **`MarkdownManager`**: Core engine for parsing and serializing Markdown
+    - Parse Markdown strings to Tiptap JSON: `editor.markdown.parse(markdown)`
+    - Serialize Tiptap JSON to Markdown: `editor.markdown.serialize(json)`
+    - Access to underlying marked.js instance: `editor.markdown.instance`
+  
+  #### Editor Methods
+  - **`editor.getMarkdown()`**: Serialize current editor content to Markdown string
+  - **`editor.markdown`**: Access to MarkdownManager instance for advanced operations
+  
+  **Editor Options:**
+  - **`contentType`**: Control the type of content that is inserted into the editor. Can be `json`, `html` or `markdown` - defaults to `json` and will automatically detect invalid content types (like JSON when it is actually Markdown).
+    ```typescript
+    new Editor({
+      content: '# Hello World',
+      contentType: 'markdown'
+    })
+    ```
+  
+  **Command Options:** All content commands now support an `contentType` option:
+  - **`setContent(markdown, { contentType: 'markdown' })`**: Replace editor content with markdown
+  - **`insertContent(markdown, { contentType: 'markdown' })`**: Insert markdown at cursor position
+  - **`insertContentAt(position, markdown, { contentType: 'markdown' })`**: Insert Markdown at specific position
+  
+  For more, check [the documentation](https://tiptap.dev/docs/editor/markdown).
+
+### @tiptap/extension-link
+
+#### Patch Changes
+
+- Paste Handlers and onPaste plugin now respect shouldAutoLink/validate options
+
+### @tiptap/extensions
+
+#### Patch Changes
+
+- Make the `TrailingNode` extension's `node` option optional and derive the
+  default node type from the editor schema when available.
+  
+  Previously the extension used a hard-coded `'paragraph'` default and the
+  `node` option was required in the TypeScript definitions. This change:
+  
+  - makes `node` optional in the options type,
+  - prefers the editor schema's top node default type when resolving the
+    trailing node, and
+  - falls back to the configured option or `'paragraph'` as a last resort.
+  
+  This fixes cases where projects use a different top-level default node and
+  prevents the extension from inserting an incorrect trailing node type.
+
+## v3.6.7
+
+### @tiptap/html
+
+#### Patch Changes
+
+- Fix CVE-2025-61927 by bumping happy-dom to 20.0.0
+  
+  Bumps the transitive/dev dependency happy-dom from ^18.0.1 → ^20.0.0 in @tiptap/html to address CVE-2025-61927. This is a dependency/security-only change and does not modify any public APIs.
+  
+  Why:
+  - happy-dom released a security fix for CVE-2025-61927; updating prevents the vulnerability being pulled into consumers that depend on @tiptap/html.
+
+## v3.6.6
+
+### @tiptap/extension-floating-menu
+
+#### Patch Changes
+
+- Fixed a problem where the position of a menu is not updated on creation when shouldShow is true
+
+### @tiptap/extension-bubble-menu
+
+#### Patch Changes
+
+- Fixed a problem where the position of a menu is not updated on creation when shouldShow is true
+
+### @tiptap/vue-3
+
+#### Patch Changes
+
+- Fixed a bug that caused conditionally rendered bubble menus not to be attached to the DOM correctly
+
+## v3.6.5
+
+### @tiptap/extension-horizontal-rule
+
+#### Patch Changes
+
+- Added nextNodeType option to horizontal-rule extension, allowing users to specify which node type should be inserted after a horizontal rule
+
+### @tiptap/html
+
+#### Patch Changes
+
+- Fix: Clean up happy-dom window instance fixing a memory leak caused by unclosed happy-dom windows
+
+### @tiptap/core
+
+#### Patch Changes
+
+- Editors can now emit `transaction` and `update` events before being mounted.
+  This means smoother state handling and instant feedback from editors, even when they're not in the DOM.
+
+## v3.6.4
+
+### @tiptap/html
+
+#### Patch Changes
+
+- Fix: Clean up happy-dom window instance fixing a memory leak caused by unclosed happy-dom windows
+
+## v3.6.3
+
+### @tiptap/react
+
+#### Patch Changes
+
+- Updated the React `FloatingMenu` plugin hook dependencies to match the `BubbleMenu` behavior.
+  The FloatingMenu will now respond to changes in `appendTo`, `pluginKey`, `shouldShow`, and `options`.
+- Resolved an issue where the React BubbleMenu did not update when FloatingUI option props changed after initial mount. The BubbleMenu now correctly responds to updated option props.
+- Improved the BubbleMenu's usability by ensuring the `appendTo` prop passed to the React BubbleMenu component is now correctly forwarded to the underlying bubble menu plugin. This fix allows developers to customize where the BubbleMenu is attached in the DOM, helping resolve issues with positioning and portal setups in React apps.
+
+### @tiptap/extensions
+
+#### Patch Changes
+
+- The Selection extension now uses the correct SelectionOptions type, providing accurate typings for its options.
+
+### @tiptap/extension-code-block
+
+#### Patch Changes
+
+- Configuration options for the CodeBlock extension now support `null` and `undefined` values.
+  This makes custom setups more flexible and avoids unnecessary type errors when omitting optional overrides.
+  All existing default values and fallback logic remain in place - no breaking changes for existing code.
+
+### @tiptap/core
+
+#### Patch Changes
+
+- Refined the `JSONContent.attrs` definition to exactly mirror the structure returned by `editor.getJSON()`. This ensures strict type safety and consistency between the editor output and the expected type, eliminating errors caused by mismatched attribute signatures.
+
+### @tiptap/extension-table-of-contents
+
+#### Patch Changes
+
+- Improve typings by inferring the storage type for the Table of Contents extension
+
+### @tiptap/extension-floating-menu
+
+#### Patch Changes
+
+- You can now pass a callback to the `appendTo` option in the floating and bubble menu
+  extensions. The callback must return an element synchronously,
+  so menus can be appended to elements that are created dynamically.
+
+### @tiptap/extension-bubble-menu
+
+#### Patch Changes
+
+- You can now pass a callback to the `appendTo` option in the floating and bubble menu
+  extensions. The callback must return an element synchronously,
+  so menus can be appended to elements that are created dynamically.
+
 ## v3.6.2
 
 ### @tiptap/extension-bubble-menu
